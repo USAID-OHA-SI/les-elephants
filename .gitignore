@@ -52,6 +52,16 @@ rsconnect/
 .Rhistory
 .RData
 .Ruserdata
+
+
+#nothing from these folders
+AI/*
+GIS/*
+Images/*
+Graphics/*
+Data/*
+Dataout/*
+
 #no data
 *.csv
 *.gz
@@ -76,14 +86,3 @@ rsconnect/
 *.dta
 *.shp
 *.dbf
-
-
-
-
-#nothing from these folders
-AI/*
-GIS/*
-Images/*
-Graphics/*
-Data/*
-Dataout/*
