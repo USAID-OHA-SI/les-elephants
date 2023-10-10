@@ -10,8 +10,8 @@
 # LOCALS & SETUP ============================================================================
 
   # Libraries
-    oha
 
+    # Library to be loaded from str
   # Set paths
 
     dir_data   <- "Data"
@@ -30,12 +30,36 @@
     agency <- "USAID"
     cntry <- "Cote d'Ivoire"
 
+    # Indicators Reference list
+    inds <- list(
+      'prevention' = c(
+        "FPINT_SITE", "GEND_GBV", "KP_MAT", "KP_PREV",
+        "OVC_SERV", "PP_PREV", "PREP_CT",
+        "PREP_NEW", "TB_PREV", "VMMC_CIRC"
+      ),
+      'testing' = c(
+        "CXCA_SCRN", "HTS_INDEX", "HTS_RECENT",
+        "HTS_SELF", "HTS_TST", "OVC_HIVSTAT",
+        "PMTCT_EID", "PMTCT_FO", "PMTCT_HEI_POS", "PMTCT_STAT", "TB_STAT"
+      ),
+      'treatement' = c(
+        "CXCA_TX", "PMTCT_ART", "TB_ART",
+        "TX_CURR", "TX_ML", "TX_NEW",
+        "TX_RTT", "TX_TB"
+      ),
+      'viralload' = c("TX_PVLS"),
+      'healthsystem' = c(
+        "EMR_SITE", "LAB_PTCQI", "SC_ARVDISP", "SC_CURR"
+      )
+    )
+
+
   # Files
 
     file_nat <- si_path() %>% return_latest("NAT_SUBNAT")
     file_psnu <- si_path() %>% return_latest("PSNU_IM_FY21")
 
-  # Functions
+# Functions
 
 # LOAD DATA ============================================================================
 
