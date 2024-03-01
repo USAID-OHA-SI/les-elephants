@@ -61,6 +61,19 @@
 
 # Functions
 
+# Data Extraction ====
+
+  grabr::pano_extract_msds(
+    operatingunit = cntry,
+    archive = TRUE,
+    #add_global = FALSE,
+    dest_path = si_path(),
+    username = pano_user(),
+    password = pano_pwd()
+  )
+
+
+
 # LOAD DATA ============================================================================
 
   #
