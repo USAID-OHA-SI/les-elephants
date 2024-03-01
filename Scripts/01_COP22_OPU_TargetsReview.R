@@ -46,6 +46,13 @@
 
   file_opu %>% excel_sheets()
 
+  df_opu_raw <- file_opu %>%
+    read_excel(sheet = "PSNUxIM", skip = 13)
+
+  df_opu_raw %>%
+    filter(str_detect(indicator_code, "OVC")) %>%
+    distinct(indicator_code)
+
   df_opu <- file_opu %>% tame_dp(type = "PSNUxIM")
 
   df_opu %>% glimpse()
@@ -54,6 +61,10 @@
     mutate(fiscal_year = fy) %>%
     select(-cumulative) %>%
     rename(targets_opu = targets)
+
+  df_opu %>%
+    filter(str_detect(indicator, "OVC")) %>%
+    distinct(indicator, standardizeddisaggregate)
 
   opu_cols <- df_opu %>% names()
 
@@ -110,25 +121,7 @@
                       numeratordenom == ..3,
                       standardizeddisaggregate == ..4))
 
-  #NOTE: this is not working
-  # df_targets <- df_opu_inds %>%
-  #   pmap_dfr(function(indicatortype,
-  #                     indicator,
-  #                     standardizeddisaggregate,
-  #                     numeratordenom){
-  #
-  #     print(glue("{indicatortype} - {indicator} ({numeratordenom}, {standardizeddisaggregate})"))
-  #
-  #     .df <- df_msd %>%
-  #       filter(fiscal_year == fy,
-  #              indicatortype == indicatortype,
-  #              indicator == indicator,
-  #              numeratordenom == numeratordenom,
-  #              standardizeddisaggregate == standardizeddisaggregate,
-  #              source_name == "DATIM")
-  #
-  #     return(.df)
-  #   })
+
 
   df_targets %>% glimpse()
 
@@ -154,6 +147,20 @@
   df_msd_mechs <- df_targets %>%
     select(mech_code, mech_name, prime_partner_name, prime_partner_name, funding_agency) %>%
     distinct_all()
+
+  ## Check OVC Targets
+  df_msd %>%
+    filter(fiscal_year == fy,
+           indicator == "OVC_SERV") %>%
+    distinct(standardizeddisaggregate) %>%
+    arrange(standardizeddisaggregate)
+
+  df_msd %>%
+    filter(fiscal_year == fy,
+           indicator == "OVC_SERV",
+           str_detect(standardizeddisaggregate, "ProgramStatus")) %>%
+    summarise(targets = sum(targets, na.rm = T),
+              .by = c(indicator, standardizeddisaggregate))
 
 # MUNGING
 
